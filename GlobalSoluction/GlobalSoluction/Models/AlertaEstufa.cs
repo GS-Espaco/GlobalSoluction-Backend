@@ -10,19 +10,17 @@ public class AlertaEstufa
 
     public EstufaConfig? EstufaConfig { get; set; }
 
-    public int? SensorId { get; set; }
-
-    public Sensor? Sensor { get; set; }
+    public TipoSensor TipoSensor { get; set; }
 
     public string TipoAlerta { get; set; } = string.Empty;
 
-    public NivelCriticidade NivelCriticidade { get; set; } = NivelCriticidade.Baixo;
+    public NivelCriticidade NivelCriticidade { get; set; }
 
     public string Mensagem { get; set; } = string.Empty;
 
     public string Recomendacao { get; set; } = string.Empty;
 
-    public bool Resolvido { get; set; }
+    public bool Resolvido { get; set; } = false;
 
     public DateTime DataCriacao { get; set; } = DateTime.Now;
 

@@ -1,12 +1,16 @@
-﻿namespace GlobalSoluction.Models;
+﻿using GlobalSoluction.Enums;
+
+namespace GlobalSoluction.Models;
 
 public class LeituraSensor
 {
     public int Id { get; set; }
 
-    public int SensorId { get; set; }
+    public int EstufaConfigId { get; set; }
 
-    public Sensor? Sensor { get; set; }
+    public EstufaConfig? EstufaConfig { get; set; }
+
+    public TipoSensor TipoSensor { get; set; }
 
     public decimal Valor { get; set; }
 

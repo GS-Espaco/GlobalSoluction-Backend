@@ -33,22 +33,16 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<EstufaConfig>()
+            .HasMany(estufa => estufa.Leituras)
+            .WithOne(leitura => leitura.EstufaConfig)
+            .HasForeignKey(leitura => leitura.EstufaConfigId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<EstufaConfig>()
             .HasMany(estufa => estufa.Alertas)
             .WithOne(alerta => alerta.EstufaConfig)
             .HasForeignKey(alerta => alerta.EstufaConfigId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<Sensor>()
-            .HasMany(sensor => sensor.Leituras)
-            .WithOne(leitura => leitura.Sensor)
-            .HasForeignKey(leitura => leitura.SensorId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<Sensor>()
-            .HasMany(sensor => sensor.Alertas)
-            .WithOne(alerta => alerta.Sensor)
-            .HasForeignKey(alerta => alerta.SensorId)
-            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<Usuario>()
             .HasIndex(usuario => usuario.Email)

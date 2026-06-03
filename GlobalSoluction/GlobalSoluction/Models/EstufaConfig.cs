@@ -15,7 +15,7 @@ public class EstufaConfig
     public string Nome { get; set; } = string.Empty;
 
     [Required]
-    public string CulturaAtual { get; set; } = string.Empty;
+    public string TipoPlantacao { get; set; } = string.Empty;
 
     public decimal TemperaturaIdealMin { get; set; }
 
@@ -46,4 +46,5 @@ public class EstufaConfig
     public ICollection<Sensor> Sensores { get; set; } = new List<Sensor>();
 
     public ICollection<AlertaEstufa> Alertas { get; set; } = new List<AlertaEstufa>();
+    public ICollection<LeituraSensor> Leituras { get; set; } = new List<LeituraSensor>();
 }

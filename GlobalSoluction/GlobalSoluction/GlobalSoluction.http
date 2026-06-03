@@ -1,6 +1,78 @@
 @GlobalSoluction_HostAddress = http://localhost:5173
 
-GET {{GlobalSoluction_HostAddress}}/weatherforecast/
-Accept: application/json
 
-###
+### 1. Criar Local Orbital
+POST {{GlobalSoluction_HostAddress}}/api/LocaisOrbitais
+Content-Type: application/json
+
+{
+  "nome": "Cratera Shackleton",
+  "planeta": "Lua",
+  "regiao": "Polo Sul Lunar",
+  "protecaoNatural": true,
+  "incidenciaSolar": 78.5,
+  "possuiGeloSubterraneo": true,
+  "nivelRiscoRadiacao": 32.4,
+  "observacoes": "Região com potencial para instalação de estufa."
+}
+
+### 2. Listar Locais Orbitais
+GET {{GlobalSoluction_HostAddress}}/api/LocaisOrbitais
+
+### 3. Criar Estufa
+POST {{GlobalSoluction_HostAddress}}/api/Estufas
+Content-Type: application/json
+
+{
+  "localOrbitalId": 1,
+  "nome": "Estufa Alpha",
+  "tipoPlantacao": "Batata",
+  "temperaturaIdealMin": 18,
+  "temperaturaIdealMax": 26,
+  "umidadeArIdealMin": 55,
+  "umidadeArIdealMax": 75,
+  "umidadeSoloIdealMin": 45,
+  "umidadeSoloIdealMax": 70,
+  "luminosidadeIdealMin": 600,
+  "luminosidadeIdealMax": 1200,
+  "co2IdealMin": 350,
+  "co2IdealMax": 900
+}
+
+### 4. Listar Estufas
+GET {{GlobalSoluction_HostAddress}}/api/Estufas
+
+### 5. Enviar leitura normal
+POST {{GlobalSoluction_HostAddress}}/api/LeiturasSensor
+Content-Type: application/json
+
+{
+  "estufaConfigId": 1,
+  "tipoSensor": 1,
+  "valor": 22
+}
+
+### 6. Enviar leitura crítica
+POST {{GlobalSoluction_HostAddress}}/api/LeiturasSensor
+Content-Type: application/json
+
+{
+  "estufaConfigId": 1,
+  "tipoSensor": 1,
+  "valor": 40
+}
+
+### 7. Listar Leituras
+GET {{GlobalSoluction_HostAddress}}/api/LeiturasSensor
+
+### 8. Listar Leituras por Estufa
+GET {{GlobalSoluction_HostAddress}}/api/LeiturasSensor/estufa/1
+
+### 9. Listar Alertas
+GET {{GlobalSoluction_HostAddress}}/api/AlertasEstufa
+
+### 10. Listar Alertas por Estufa
+GET {{GlobalSoluction_HostAddress}}/api/AlertasEstufa/estufa/1
+
+### 11. Resolver Alerta
+PATCH {{GlobalSoluction_HostAddress}}/api/AlertasEstufa/1/resolver

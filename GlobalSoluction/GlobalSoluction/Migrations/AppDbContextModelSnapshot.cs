@@ -53,18 +53,16 @@ namespace GlobalSoluction.Migrations
                     b.Property<bool>("Resolvido")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("SensorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TipoAlerta")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("TipoSensor")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EstufaConfigId");
-
-                    b.HasIndex("SensorId");
 
                     b.ToTable("AlertasEstufa");
                 });
@@ -87,10 +85,6 @@ namespace GlobalSoluction.Migrations
                     b.Property<decimal>("Co2IdealMin")
                         .HasPrecision(8, 2)
                         .HasColumnType("decimal(8,2)");
-
-                    b.Property<string>("CulturaAtual")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime(6)");
@@ -120,6 +114,10 @@ namespace GlobalSoluction.Migrations
                     b.Property<decimal>("TemperaturaIdealMin")
                         .HasPrecision(6, 2)
                         .HasColumnType("decimal(6,2)");
+
+                    b.Property<string>("TipoPlantacao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<decimal>("UmidadeArIdealMax")
                         .HasPrecision(6, 2)
@@ -155,7 +153,10 @@ namespace GlobalSoluction.Migrations
                     b.Property<DateTime>("DataLeitura")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("SensorId")
+                    b.Property<int>("EstufaConfigId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TipoSensor")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
@@ -164,7 +165,7 @@ namespace GlobalSoluction.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SensorId");
+                    b.HasIndex("EstufaConfigId");
 
                     b.ToTable("LeiturasSensor");
                 });
@@ -290,14 +291,7 @@ namespace GlobalSoluction.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GlobalSoluction.Models.Sensor", "Sensor")
-                        .WithMany("Alertas")
-                        .HasForeignKey("SensorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.Navigation("EstufaConfig");
-
-                    b.Navigation("Sensor");
                 });
 
             modelBuilder.Entity("GlobalSoluction.Models.EstufaConfig", b =>
@@ -313,13 +307,13 @@ namespace GlobalSoluction.Migrations
 
             modelBuilder.Entity("GlobalSoluction.Models.LeituraSensor", b =>
                 {
-                    b.HasOne("GlobalSoluction.Models.Sensor", "Sensor")
+                    b.HasOne("GlobalSoluction.Models.EstufaConfig", "EstufaConfig")
                         .WithMany("Leituras")
-                        .HasForeignKey("SensorId")
+                        .HasForeignKey("EstufaConfigId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Sensor");
+                    b.Navigation("EstufaConfig");
                 });
 
             modelBuilder.Entity("GlobalSoluction.Models.Sensor", b =>
@@ -337,19 +331,14 @@ namespace GlobalSoluction.Migrations
                 {
                     b.Navigation("Alertas");
 
+                    b.Navigation("Leituras");
+
                     b.Navigation("Sensores");
                 });
 
             modelBuilder.Entity("GlobalSoluction.Models.LocalOrbital", b =>
                 {
                     b.Navigation("Estufas");
-                });
-
-            modelBuilder.Entity("GlobalSoluction.Models.Sensor", b =>
-                {
-                    b.Navigation("Alertas");
-
-                    b.Navigation("Leituras");
                 });
 #pragma warning restore 612, 618
         }

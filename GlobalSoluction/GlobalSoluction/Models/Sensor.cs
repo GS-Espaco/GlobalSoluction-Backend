@@ -23,7 +23,4 @@ public class Sensor
 
     public DateTime DataInstalacao { get; set; } = DateTime.Now;
 
-    public ICollection<LeituraSensor> Leituras { get; set; } = new List<LeituraSensor>();
-
-    public ICollection<AlertaEstufa> Alertas { get; set; } = new List<AlertaEstufa>();
 }
