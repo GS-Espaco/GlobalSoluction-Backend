@@ -7,10 +7,14 @@ namespace GlobalSoluction.Services;
 public class EstufaService : IEstufaService
 {
     private readonly IEstufaRepository _estufaRepository;
+    private readonly ILocalOrbitalRepository _localOrbitalRepository;
 
-    public EstufaService(IEstufaRepository estufaRepository)
+    public EstufaService(
+        IEstufaRepository estufaRepository,
+        ILocalOrbitalRepository localOrbitalRepository)
     {
         _estufaRepository = estufaRepository;
+        _localOrbitalRepository = localOrbitalRepository;
     }
 
     public async Task<List<EstufaRespostaDto>> ListarTodasAsync()
@@ -34,6 +38,13 @@ public class EstufaService : IEstufaService
 
     public async Task<EstufaRespostaDto> CriarAsync(CriarEstufaDto dto)
     {
+        var localOrbital = await _localOrbitalRepository.BuscarPorIdAsync(dto.LocalOrbitalId);
+
+        if (localOrbital == null)
+        {
+            throw new KeyNotFoundException("LocalOrbital não encontrado.");
+        }
+
         var estufa = new EstufaConfig
         {
             LocalOrbitalId = dto.LocalOrbitalId,
@@ -50,7 +61,8 @@ public class EstufaService : IEstufaService
             Co2IdealMin = dto.Co2IdealMin,
             Co2IdealMax = dto.Co2IdealMax,
             Ativa = true,
-            DataCriacao = DateTime.Now
+            DataCriacao = DateTime.Now,
+            DataAtualizacao = DateTime.Now
         };
 
         var estufaCriada = await _estufaRepository.CriarAsync(estufa);

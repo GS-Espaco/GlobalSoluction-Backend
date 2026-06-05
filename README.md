@@ -25,6 +25,28 @@ Utilizando um único repositório e uma única aplicação.
 
 ---
 
+# Relação com a Global Solution
+
+O GlobalSoluction representa o módulo responsável pelo monitoramento e gestão de ambientes agrícolas espaciais.
+
+Dentro da proposta da Global Solution, a API auxilia na seleção de locais orbitais adequados para cultivo, configuração de estufas, monitoramento das condições ambientais e geração automática de alertas operacionais.
+
+Dessa forma, a solução contribui para a sustentabilidade de missões espaciais de longa duração por meio da produção controlada de alimentos.
+
+---
+
+# ODS Relacionado
+
+## ODS 2 – Fome Zero e Agricultura Sustentável
+
+A solução contribui para pesquisas relacionadas à produção sustentável de alimentos em ambientes espaciais por meio do monitoramento de parâmetros ambientais necessários ao cultivo.
+
+## ODS 9 – Indústria, Inovação e Infraestrutura
+
+O projeto utiliza tecnologias modernas de desenvolvimento de software para apoiar iniciativas relacionadas à indústria espacial e sustentabilidade.
+
+---
+
 # Problema
 
 Ambientes espaciais apresentam desafios relacionados a:
@@ -42,7 +64,9 @@ O sistema busca auxiliar no monitoramento dessas condições através de leitura
 
 A aplicação foi construída seguindo uma arquitetura em camadas:
 
+```text
 Controller → Service → Repository → Banco de Dados
+```
 
 Utilizando:
 
@@ -65,6 +89,18 @@ Utilizando:
 * JWT Authentication
 * BCrypt
 * Dependency Injection
+
+---
+
+# Pacotes Utilizados
+
+* Microsoft.EntityFrameworkCore
+* Microsoft.EntityFrameworkCore.Design
+* Pomelo.EntityFrameworkCore.MySql
+* Microsoft.AspNetCore.Authentication.JwtBearer
+* BCrypt.Net-Next
+* Swashbuckle.AspNetCore
+* Microsoft.OpenApi
 
 ---
 
@@ -142,11 +178,13 @@ Responsável pela autenticação e autorização da API.
 
 # Relacionamentos
 
+```text
 LocalOrbital (1) → (N) EstufaConfig
 
 EstufaConfig (1) → (N) LeituraSensor
 
 EstufaConfig (1) → (N) AlertaEstufa
+```
 
 ---
 
@@ -209,23 +247,43 @@ EstufaConfig (1) → (N) AlertaEstufa
 
 # Estrutura de Pastas
 
+```text
 Controllers
-
 Services
-
 Repositories
-
 Interfaces
-
 Models
-
 DTOs
-
 Enums
-
 Data
-
 Migrations
+```
+
+---
+
+# Configuração do Banco de Dados
+
+Criar o banco:
+
+```sql
+CREATE DATABASE GlobalSoluctionDb;
+```
+
+Configurar a connection string em:
+
+```text
+appsettings.json
+```
+
+Exemplo:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=localhost;database=GlobalSoluctionDb;user=root;password=123456"
+  }
+}
+```
 
 ---
 
@@ -233,15 +291,43 @@ Migrations
 
 ## Restaurar Dependências
 
+```bash
 dotnet restore
+```
 
 ## Executar Migrations
 
+```bash
 dotnet ef database update
+```
 
 ## Executar Projeto
 
+```bash
 dotnet run
+```
+
+---
+
+# Migrations
+
+Criar migration:
+
+```bash
+dotnet ef migrations add InitialCreate
+```
+
+Aplicar migration:
+
+```bash
+dotnet ef database update
+```
+
+Remover migration:
+
+```bash
+dotnet ef migrations remove
+```
 
 ---
 
@@ -249,5 +335,21 @@ dotnet run
 
 Após iniciar a aplicação:
 
-[https://localhost:xxxx/swagger](https://localhost:xxxx/swagger)
+```text
+https://localhost:xxxx/swagger
+```
 
+---
+
+# Decisões Técnicas
+
+As principais decisões técnicas adotadas foram:
+
+* Utilização de ASP.NET Core Web API como interface navegável.
+* Persistência de dados utilizando Entity Framework Core e MySQL.
+* Arquitetura em camadas (Controller → Service → Repository).
+* Uso de DTOs para transporte de dados.
+* Autenticação baseada em JWT.
+* Criptografia de senhas utilizando BCrypt.
+* Geração automática de alertas a partir das leituras ambientais simuladas.
+* Exportação de dados em JSON para atender aos requisitos da disciplina.

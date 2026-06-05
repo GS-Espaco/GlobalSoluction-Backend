@@ -48,13 +48,30 @@ public class EstufasController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var estufaCriada = await _estufaService.CriarAsync(dto);
+        try
+        {
+            var estufaCriada = await _estufaService.CriarAsync(dto);
 
-        return CreatedAtAction(
-            nameof(BuscarPorId),
-            new { id = estufaCriada.Id },
-            estufaCriada
-        );
+            return CreatedAtAction(
+                nameof(BuscarPorId),
+                new { id = estufaCriada.Id },
+                estufaCriada
+            );
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new
+            {
+                mensagem = ex.Message
+            });
+        }
+        catch (Exception)
+        {
+            return BadRequest(new
+            {
+                mensagem = "Erro ao criar estufa."
+            });
+        }
     }
 
     [HttpPut("{id}")]
