@@ -357,5 +357,5 @@ As principais decisões técnicas adotadas foram:
 ---
 # Documentação Complementar
 
-- [Diagrama de Fluxo](docs/diagrama-fluxo.md)
-- [Evidências de Execução](docs/evidencias-execucao.md)
+- [Diagrama de Fluxo](Docs/diagrama-fluxo.md)
+- [Evidências de Execução](Docs/evidencias-execucao.md)
