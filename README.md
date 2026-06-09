@@ -353,3 +353,9 @@ As principais decisões técnicas adotadas foram:
 * Criptografia de senhas utilizando BCrypt.
 * Geração automática de alertas a partir das leituras ambientais simuladas.
 * Exportação de dados em JSON para atender aos requisitos da disciplina.
+
+---
+# Documentação Complementar
+
+- [Diagrama de Fluxo](docs/diagrama-fluxo.md)
+- [Evidências de Execução](docs/evidencias-execucao.md)
